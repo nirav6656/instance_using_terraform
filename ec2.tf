@@ -42,6 +42,7 @@ resource "aws_default_security_group" "default" {
 #ec2-instance
 
 resource "aws_instance" "demo" {
+  count = 2
   ami           = "ami-029c5475368ac7adc"
   instance_type = var.aws_instance_type
   associate_public_ip_address = true
