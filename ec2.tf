@@ -43,7 +43,7 @@ resource "aws_default_security_group" "default" {
 
 resource "aws_instance" "demo" {
   ami           = "ami-029c5475368ac7adc"
-  instance_type = "t3.micro"
+  instance_type = var.aws_instance_type
   associate_public_ip_address = true
 
   key_name = aws_key_pair.deployer.key_name
@@ -52,7 +52,7 @@ resource "aws_instance" "demo" {
     Name = "demo-server"
   }
   root_block_device {
-    volume_size = 8
+    volume_size = var.aws_root_storage_size
     volume_type = "gp3"
   }
 }
