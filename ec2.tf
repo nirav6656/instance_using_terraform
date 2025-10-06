@@ -45,7 +45,7 @@ resource "aws_instance" "demo" {
   ami           = "ami-029c5475368ac7adc"
   instance_type = var.aws_instance_type
   associate_public_ip_address = true
-
+  user_data = file("install_nginx.sh")
   key_name = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_default_security_group.default.id]
   tags = {
