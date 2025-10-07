@@ -7,3 +7,4 @@ variable "aws_root_storage_size" {
   default = 9
   type    = number
 }
+

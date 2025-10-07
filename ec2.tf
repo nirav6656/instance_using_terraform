@@ -42,15 +42,19 @@ resource "aws_default_security_group" "default" {
 #ec2-instance
 
 resource "aws_instance" "demo" {
-  count = 2
+  for_each = tomap({
+    first-instance = "t3.micro",
+    second-instance = "t3.micro"
+  })
+  depends_on = [ aws_default_security_group.default, aws_key_pair.deployer ]
   ami           = "ami-029c5475368ac7adc"
-  instance_type = var.aws_instance_type
+  instance_type = each.value
   associate_public_ip_address = true
   user_data = file("install_nginx.sh")
   key_name = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_default_security_group.default.id]
   tags = {
-    Name = "demo-server"
+    Name = each.key
   }
   root_block_device {
     volume_size = var.aws_root_storage_size
